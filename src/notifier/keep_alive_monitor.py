@@ -85,7 +85,7 @@ class KeepAliveMonitor:
                         f"No events for the past {seconds_since_last} seconds."
                     )
                     logging.info("Starting farmer again")
-		    home = expanduser("~")
+                    home = expanduser("~")
                     args = (home + "/chia-blockchain/venv/bin/chia", "start", "harvester", "-r")
                     popen = subprocess.Popen(args, stdout=subprocess.PIPE)
                     popen.wait()
