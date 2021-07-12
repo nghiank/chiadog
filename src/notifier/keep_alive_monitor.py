@@ -2,10 +2,12 @@
 import logging
 import urllib.request
 import socket
+import subprocess
 from datetime import datetime
 from threading import Thread
 from time import sleep
 from typing import List
+
 
 # project
 from . import EventService, Event, EventType, EventPriority
