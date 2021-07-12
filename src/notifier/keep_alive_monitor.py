@@ -3,6 +3,7 @@ import logging
 import urllib.request
 import socket
 import subprocess
+from os.path import expanduser
 from datetime import datetime
 from threading import Thread
 from time import sleep
@@ -84,7 +85,8 @@ class KeepAliveMonitor:
                         f"No events for the past {seconds_since_last} seconds."
                     )
                     logging.info("Starting farmer again")
-                    args = ("~/chia-blockchain/venv/bin/chia", "start", "harvester", "-r")
+		    home = expanduser("~")
+                    args = (home + "/chia-blockchain/venv/bin/chia", "start", "harvester", "-r")
                     popen = subprocess.Popen(args, stdout=subprocess.PIPE)
                     popen.wait()
                     output = popen.stdout.read()
