@@ -1,6 +1,7 @@
 # std
 import logging
 import urllib.request
+import socket
 from datetime import datetime
 from threading import Thread
 from time import sleep
@@ -77,9 +78,15 @@ class KeepAliveMonitor:
                 logging.debug(f"Keep-alive check for {service.name}: Last activity {seconds_since_last} seconds ago.")
                 if seconds_since_last > self._last_keep_alive_threshold_seconds[service]:
                     message = (
-                        f"Your harvester appears to be offline! "
+                        f"Your harvester  " + socket.gethostname() +  f" appears to be offline! "
                         f"No events for the past {seconds_since_last} seconds."
                     )
+                    logging.info("Starting farmer again")
+                    args = ("~/chia-blockchain/venv/bin/chia", "start", "harvester", "-r")
+                    popen = subprocess.Popen(args, stdout=subprocess.PIPE)
+                    popen.wait()
+                    output = popen.stdout.read()
+                    print(output)
                     logging.warning(message)
                     events.append(
                         Event(
